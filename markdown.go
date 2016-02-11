@@ -23,7 +23,7 @@ layout: "%s"
 page_title: "%s: %s"
 sidebar_current: "%s"
 description: |-
-	%s 
+    %s 
 ---`
 
 func (o MarkdownOutput) Output(providers []TerraformProvider) error {
@@ -54,7 +54,7 @@ func (o MarkdownOutput) Output(providers []TerraformProvider) error {
 					unindentedFirstLine := strings.TrimLeftFunc(lines[1], unicode.IsSpace)
 					unindentLength := len(lines[1]) - len(unindentedFirstLine)
 
-					output.WriteString(fmt.Sprintf("### %s\n", ex.Description))
+					output.WriteString(fmt.Sprintf("%s\n\n", ex.Description))
 					output.WriteString("\n```\n")
 					output.WriteString(fmt.Sprintf("%s\n", unindentedFirstLine))
 					for _, v := range lines[2:] {
@@ -79,7 +79,7 @@ func (o MarkdownOutput) Output(providers []TerraformProvider) error {
 						attributes = append(attributes, "Change forces new resource")
 					}
 
-					output.WriteString(fmt.Sprintf("* `%s` - (%s)", arg.Name, strings.Join(attributes, ",")))
+					output.WriteString(fmt.Sprintf("* `%s` - (%s)", arg.Name, strings.Join(attributes, ", ")))
 					if arg.Default != "" {
 						output.WriteString(fmt.Sprintf("  Default: `%s`", arg.Default))
 					}
@@ -93,7 +93,7 @@ func (o MarkdownOutput) Output(providers []TerraformProvider) error {
 				}
 			}
 
-			filename := filepath.Join(o.OutputPath, fmt.Sprintf("%s.md", r.Name))
+			filename := filepath.Join(o.OutputPath, fmt.Sprintf("%s.html.markdown", r.Name))
 			err := ioutil.WriteFile(filename, []byte(output.String()), 0644)
 			if err != nil {
 				log.Fatal(err)
