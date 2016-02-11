@@ -1,0 +1,8 @@
+larceny
+output/
+*.swp
+*~
+.idea/
+*.iml
+*.test
+*.xml
