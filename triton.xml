@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<provider name="triton">
+    <resources>
+        <resource name="triton_firewall_rule" description="Triton Cloud Firewall Rule">
+            <arguments>
+                <argument name="rule" type="string" required="true">The firewall rule described using the Cloud API rule syntax defined at https://docs.joyent.com/public-cloud/network/firewall/cloud-firewall-rules-reference.</argument>
+                <argument name="enabled" type="boolean" default="false">Whether the rule should be effective.</argument>
+            </arguments>
+            <attributes>
+                <attribute name="id" type="string">The identifier representing the firewall rule in Triton.</attribute>
+            </attributes>
+            <examples>
+                <example description="Allow traffic on ports tcp/80 and tcp/443 to machines with the 'www' tag from any source">
+                    resource "triton_firewall_rule" "www" {
+                        rule = "FROM any TO tag www ALLOW tcp (PORT 80 AND PORT 443)"
+                        enabled = true
+                    }
+                </example>
+                <example description="Block traffic on port tcp/143 to all machines">
+                    resource "triton_firewall_rule" "imap" {
+                        rule = "FROM any TO all vms BLOCK tcp port 143"
+                        enabled = true
+                    }
+                </example>
+            </examples>
+        </resource>
+    </resources>
+</provider>
