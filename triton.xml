@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <provider name="triton">
     <resources>
-        <resource name="triton_firewall_rule" description="Triton Cloud Firewall Rule">
+        <resource name="triton_firewall_rule">
+            <description>
+                The `triton_firewall_rule` resource represents a rule for the Triton cloud firewall.
+            </description>
             <arguments>
                 <argument name="rule" type="string" required="true">The firewall rule described using the Cloud API rule syntax defined at https://docs.joyent.com/public-cloud/network/firewall/cloud-firewall-rules-reference.</argument>
                 <argument name="enabled" type="boolean" default="false">Whether the rule should be effective.</argument>
