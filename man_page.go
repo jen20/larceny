@@ -54,6 +54,9 @@ func (o ManPageOutput) Output(providers []TerraformProvider) error {
 				if arg.ForceNew {
 					attributes = append(attributes, "Change forces new resource")
 				}
+				if arg.Computed {
+					attributes = append(attributes, "Computed")
+				}
 				if arg.Default != "" {
 					attributes = append(attributes, fmt.Sprintf("Default: %s", arg.Default))
 				}
@@ -63,14 +66,16 @@ func (o ManPageOutput) Output(providers []TerraformProvider) error {
 				output.WriteString(fmt.Sprintf("%s\n", arg.Description))
 			}
 
-			output.WriteString("\n\n.SH ATTRIBUTE REFERENCE\n")
-			output.WriteString("The following attributes are exported:\n")
+			if len(r.Attributes) > 0 {
+				output.WriteString("\n\n.SH ATTRIBUTE REFERENCE\n")
+				output.WriteString("The following attributes are exported:\n")
 
-			for _, attr := range r.Attributes {
-				output.WriteString(".TP\n")
-				output.WriteString(fmt.Sprintf(`.BR %s\ (\fI%s\fR)%s`, attr.Name, attr.Type, "\n"))
-				output.WriteString(".br\n")
-				output.WriteString(fmt.Sprintf("%s\n", attr.Description))
+				for _, attr := range r.Attributes {
+					output.WriteString(".TP\n")
+					output.WriteString(fmt.Sprintf(`.BR %s\ (\fI%s\fR)%s`, attr.Name, attr.Type, "\n"))
+					output.WriteString(".br\n")
+					output.WriteString(fmt.Sprintf("%s\n", attr.Description))
+				}
 			}
 
 			if len(r.Examples) == 0 {

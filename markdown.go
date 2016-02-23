@@ -78,6 +78,9 @@ func (o MarkdownOutput) Output(providers []TerraformProvider) error {
 					if arg.ForceNew {
 						attributes = append(attributes, "Change forces new resource")
 					}
+					if arg.Computed {
+						attributes = append(attributes, "Computed")
+					}
 
 					output.WriteString(fmt.Sprintf("* `%s` - (%s)", arg.Name, strings.Join(attributes, ", ")))
 					if arg.Default != "" {
@@ -86,10 +89,12 @@ func (o MarkdownOutput) Output(providers []TerraformProvider) error {
 					output.WriteString(fmt.Sprintf("\n    %s\n\n", arg.Description))
 				}
 
-				output.WriteString("## Attribute Reference\n\nThe following attributes are exported:\n\n")
+				if len(r.Attributes) > 0 {
+					output.WriteString("## Attribute Reference\n\nThe following attributes are exported:\n\n")
 
-				for _, attr := range r.Attributes {
-					output.WriteString(fmt.Sprintf("* `%s` - (%s) - %s \n", attr.Name, attr.Type, attr.Description))
+					for _, attr := range r.Attributes {
+						output.WriteString(fmt.Sprintf("* `%s` - (%s) - %s \n", attr.Name, attr.Type, attr.Description))
+					}
 				}
 			}
 

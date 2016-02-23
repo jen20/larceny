@@ -27,5 +27,64 @@
                 </example>
             </examples>
         </resource>
+        <resource name="triton_key">
+            <description>
+                The `triton_key` resource represents an SSH key for a Triton account.
+            </description>
+            <arguments>
+                <argument name="name" type="string" forcenew="true" required="false">The name of the key. If this is left empty, the name is inferred from the comment in the SSH key material.</argument>
+                <argument name="key" type="string" forcenew="true" required="true">The SSH key material. In order to read this from a file, use the `file` interpolation.</argument>
+            </arguments>
+            <examples>
+                <example description="Create a key">
+                    resource "triton_key" "example" {
+                        name = "Example Key"
+                        key = "${file("keys/id_rsa")}"
+                    }
+                </example>
+            </examples>
+        </resource>
+        <resource name="triton_machine">
+            <description>
+                The `triton_machine` resource represents a virtual machine or infrastructure container running in Triton.
+            </description>
+            <arguments>
+                <argument name="name" type="string" required="false">The friendly name for the machine. Triton will generate a name if one is not specified.</argument>
+                <argument name="tags" type="map" required="false">A mapping of tags to apply to the machine.</argument>
+                <argument name="package" type="string" required="true">The name of the package to use for provisioning.</argument>
+                <argument name="image" type="string" required="true">The UUID of the image to provision.</argument>
+                <argument name="networks" type="list of string" required="false">A list of the IDs of the desired networks for the machine.</argument>
+                <argument name="firewall_enabled" type="boolean" required="false" default="false">Whether the cloud firewall should be enabled for this machine.</argument>
+                <argument name="root_authorized_keys" type="string" required="false">The public keys authorized for root access via SSH to the machine.</argument>
+                <argument name="user_data" type="string" required="false">Data to be copied to the machine on boot.</argument>
+                <argument name="user_script" type="string" required="false">The user script to run on boot (every boot on SmartMachines).</argument>
+                <argument name="administrator_pw" type="string" required="false">The initial password for the Administrator user. Only used for Windows virtual machines.</argument>
+            </arguments>
+            <attributes>
+                <attribute name="id" type="string">The identifier representing the firewall rule in Triton.</attribute>
+                <attribute name="type" type="string">The type of the machine (`smartmachine` or `virtualmachine`).</attribute>
+                <attribute name="state" type="string">The current state of the machine.</attribute>
+                <attribute name="dataset" type="string">The dataset URN with which the machine was provisioned.</attribute>
+                <attribute name="memory" type="int">The amount of memory the machine has (in Mb).</attribute>
+                <attribute name="disk" type="int">The amount of disk the machine has (in Gb).</attribute>
+                <attribute name="ips" type="list of strings">IP addresses of the machine.</attribute>
+                <attribute name="primaryip" type="string">The primary (public) IP address for the machine.</attribute>
+                <attribute name="created" type="string">The time at which the machine was created.</attribute>
+                <attribute name="updated" type="string">The time at which the machine was last updated.</attribute>
+            </attributes>
+            <examples>
+                <example description="Run a SmartOS base-64 machine.">
+                    resource "triton_machine" "test" {
+                        name = "example-machine"
+                        package = "g3-standard-0.25-smartos"
+                        image = "842e6fa6-6e9b-11e5-8402-1b490459e334"
+
+                        tags = {
+                            hello = "world"
+                        }
+                    }
+                </example>
+            </examples>
+        </resource>
     </resources>
 </provider>

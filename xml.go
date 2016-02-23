@@ -10,6 +10,7 @@ type ResourceArgument struct {
 	Type        string `xml:"type,attr"`
 	Required    bool   `xml:"required,attr"`
 	ForceNew    bool   `xml:"forcenew,attr"`
+	Computed    bool   `xml:"computed,attr"`
 	Default     string `xml:"default,attr"`
 	Description string `xml:",chardata"`
 }
