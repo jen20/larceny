@@ -12,13 +12,13 @@ type ResourceArgument struct {
 	ForceNew    bool   `xml:"forcenew,attr"`
 	Computed    bool   `xml:"computed,attr"`
 	Default     string `xml:"default,attr"`
-	Description string `xml:",chardata"`
+	Description string `xml:",innerxml"`
 }
 
 type ResourceAttribute struct {
 	Name        string `xml:"name,attr"`
 	Type        string `xml:"type,attr"`
-	Description string `xml:",chardata"`
+	Description string `xml:",innerxml"`
 }
 
 type TerraformResource struct {
@@ -32,7 +32,7 @@ type TerraformResource struct {
 
 type ResourceExample struct {
 	Description string `xml:"description,attr"`
-	Text        string `xml:",chardata"`
+	Text        string `xml:",innerxml"`
 }
 
 type TerraformProvider struct {

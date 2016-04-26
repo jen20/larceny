@@ -6,7 +6,7 @@
                 The `triton_firewall_rule` resource represents a rule for the Triton cloud firewall.
             </description>
             <arguments>
-                <argument name="rule" type="string" required="true">The firewall rule described using the Cloud API rule syntax defined at https://docs.joyent.com/public-cloud/network/firewall/cloud-firewall-rules-reference.</argument>
+                <argument name="rule" type="string" required="true">The firewall rule described using the Cloud API rule syntax defined in the <a href="https://docs.joyent.com/public-cloud/network/firewall/cloud-firewall-rules-reference">Cloud Firewall Rules Reference</a>.</argument>
                 <argument name="enabled" type="boolean" default="false">Whether the rule should be effective.</argument>
             </arguments>
             <attributes>
